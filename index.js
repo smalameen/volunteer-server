@@ -16,7 +16,7 @@ const password = 'hiHelloNillShari'
 
 var MongoClient = require('mongodb').MongoClient;
 
-var uri = "mongodb://volunteer:hiHelloNillShari@cluster0-shard-00-00.xdmuv.mongodb.net:27017,cluster0-shard-00-01.xdmuv.mongodb.net:27017,cluster0-shard-00-02.xdmuv.mongodb.net:27017/volunteer?ssl=true&replicaSet=atlas-g1fjff-shard-0&authSource=admin&retryWrites=true&w=majority";
+var uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0-shard-00-00.xdmuv.mongodb.net:27017,cluster0-shard-00-01.xdmuv.mongodb.net:27017,cluster0-shard-00-02.xdmuv.mongodb.net:27017/${process.env.DB_NAME}?ssl=true&replicaSet=atlas-g1fjff-shard-0&authSource=admin&retryWrites=true&w=majority`;
 MongoClient.connect(uri, function(err, client) {
   const organization= client.db("volunteer").collection("organization");
   console.log("connected")
@@ -47,4 +47,4 @@ app.get('/', (req, res) => {
   req.send('Hello World!')
 })
 
-app.listen(port)
+app.listen(process.env.PORT || port )
